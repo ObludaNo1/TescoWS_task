@@ -72,11 +72,11 @@ export class PartialMapNode<T extends NotNull> {
         result: T[]
     ): void {
         if (index >= letters.length) {
-            this.pickFollowingValues(amount, result);
+            this.pickFollowingValues([amount], result);
         } else {
             const next = this.subNodes[letters[index]];
             if (!next) {
-                this.pickFollowingValues(amount, result);
+                this.pickFollowingValues([amount], result);
             } else {
                 return next.getFollowingValues(
                     letters,
@@ -129,14 +129,14 @@ export class PartialMapNode<T extends NotNull> {
      * @param amount amount of nodes
      * @param result resulting array
      */
-    private pickFollowingValues(amount: number, result: T[]): void {
-        if (amount <= 0) {
+    private pickFollowingValues(amount: [number], result: T[]): void {
+        if (amount[0] <= 0) {
             return;
         }
         if (this.value) {
             result.push(this.value);
-            amount--;
-            if (amount <= 0) {
+            amount[0]--;
+            if (amount[0] <= 0) {
                 return;
             }
         }
@@ -148,7 +148,7 @@ export class PartialMapNode<T extends NotNull> {
         for (let i = 0; i < mapped.length; i++) {
             const subNode = mapped[i];
             subNode.pickFollowingValues(amount, result);
-            if (amount <= 0) {
+            if (amount[0] <= 0) {
                 return;
             }
         }
