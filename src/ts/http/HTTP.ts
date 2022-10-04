@@ -15,7 +15,7 @@ export class HTTP {
             (urlParams
                 ? "?" +
                   Object.entries(urlParams)
-                      .map((key, value) => `${key}=${value}`)
+                      .map(([key, value]) => `${key}=${value}`)
                       .join("&")
                 : "");
 
