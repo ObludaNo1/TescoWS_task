@@ -1,11 +1,14 @@
 import { Cities } from "./Cities";
-import { OPEN_WEATHER_MAP_API_KEY } from "./globals";
-import { HTTP } from "./http/HTTP";
-
-const http = new HTTP();
-
+import { SelectHandler } from "./SelectHandler";
 Cities.init()
     .then(() => {
         console.log("Cities successfuly initialized");
+
+        // debugger;
+        Cities.find("Londo");
     })
     .catch((error) => console.error("Cities initialization failed", error));
+
+document.getElementById("");
+
+SelectHandler.init();
