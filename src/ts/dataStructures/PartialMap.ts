@@ -62,8 +62,8 @@ export class PartialMapNode<T extends NotNull> {
      * Get values begining at some key
      * @param letters key for picking values
      * @param index current index in letters array
-     * @param amount amount of values to pick
-     * @param result resulting array
+     * @param amount maximum amount of result to place into result
+     * @param result array of results
      */
     getFollowingValues(
         letters: string[],
@@ -73,15 +73,18 @@ export class PartialMapNode<T extends NotNull> {
     ): void {
         if (index >= letters.length) {
             this.pickFollowingValues(amount, result);
-            return;
-        }
-
-        const next = this.subNodes[letters[index]];
-        if (!next) {
-            this.pickFollowingValues(amount, result);
-            return;
         } else {
-            return next.getFollowingValues(letters, index + 1, amount, result);
+            const next = this.subNodes[letters[index]];
+            if (!next) {
+                this.pickFollowingValues(amount, result);
+            } else {
+                return next.getFollowingValues(
+                    letters,
+                    index + 1,
+                    amount,
+                    result
+                );
+            }
         }
     }
 
@@ -114,7 +117,7 @@ export class PartialMapNode<T extends NotNull> {
             if (firstKeyNode.value) {
                 return firstKeyNode.value;
             } else {
-                firstKeyNode.getFirstKeyValue();
+                return firstKeyNode.getFirstKeyValue();
             }
         } else {
             return undefined;
@@ -170,14 +173,12 @@ export class PartialMap<T extends NotNull> {
         return this.root.get(key.toLocaleLowerCase().split(""), 0);
     }
 
-    getFollowingValues(key: string, amount: number): T[] {
-        const result: T[] = [];
-        this.root.getFollowingValues(
+    getFollowingValues(key: string, amount: number, result: T[]): void {
+        return this.root.getFollowingValues(
             key.toLocaleLowerCase().split(""),
             0,
             amount,
             result
         );
-        return result;
     }
 }
