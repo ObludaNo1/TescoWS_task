@@ -1,0 +1,24 @@
+{
+  "name": "weather_task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "browsersync": "npx browser-sync start --server 'public' --port 5000 --files 'public'",
+    "watch": "npx tsc --watch",
+    "dev": "run-p watch browsersync",
+    "compile": "npx tsc",
+    "clean": "npx rimraf public/js/**",
+    "build": "run-s clean compile"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "browser-sync": "^2.27.10",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.4"
+  }
+}
