@@ -39,7 +39,15 @@ export class Cities {
         return this.initialized;
     }
 
-    static find(key: string): CityRecord[] {
+    static find(key: string): CityRecord | undefined {
+        if (Cities.initialized) {
+            return Cities.citiesMap.get(key);
+        } else {
+            return undefined;
+        }
+    }
+
+    static findFollowing(key: string): CityRecord[] {
         if (Cities.initialized) {
             const result: CityRecord[] = [];
             const firstCityIndex = Cities.citiesMap.getFollowingValues(

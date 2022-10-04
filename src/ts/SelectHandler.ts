@@ -22,7 +22,7 @@ export class SelectHandler {
 
             const ul = document.createElement("ul");
             const currentInputValue = input.value;
-            const values = Cities.find(currentInputValue);
+            const values = Cities.findFollowing(currentInputValue);
 
             const currentInputValueLength = currentInputValue.length;
 
