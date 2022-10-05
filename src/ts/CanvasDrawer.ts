@@ -1,4 +1,5 @@
 import { Forecast } from "./Forecast";
+import { Metrics } from "./Metrics";
 
 export class CanvasDrawer {
     private canvas: HTMLCanvasElement;
@@ -31,15 +32,24 @@ export class CanvasDrawer {
             return (1 - t) * minY + t * maxY;
         };
 
+        console.log(
+            `Moving to ${widthPerFC * 0.5},${getY(allValues[0]).toFixed(
+                2
+            )}, value ${Metrics.tempTo(allValues[0], "C")}`
+        );
         ctx.moveTo(widthPerFC * 0.5, getY(allValues[0]));
         for (let i = 1; i < allValues.length; i++) {
             const val = allValues[i];
+            console.log(
+                `Line to ${widthPerFC * (i + 0.5)},${getY(val).toFixed(
+                    2
+                )}, value ${Metrics.tempTo(val, "C")}`
+            );
             ctx.lineTo(widthPerFC * (i + 0.5), getY(val));
         }
 
-        ctx.lineTo((allValues.length - 1) * widthPerFC, 0);
-        ctx.lineTo(widthPerFC * 0.5, 0);
-        ctx.lineTo(widthPerFC * 0.5, 0);
+        ctx.lineTo((allValues.length - 0.5) * widthPerFC, height);
+        ctx.lineTo(widthPerFC * 0.5, height);
 
         ctx.closePath();
         ctx.fillStyle = "#f00";
