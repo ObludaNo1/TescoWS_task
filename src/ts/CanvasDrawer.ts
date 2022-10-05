@@ -17,6 +17,8 @@ export class CanvasDrawer {
         const ctx = this.canvas.getContext("2d")!;
         ctx.beginPath();
 
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
         const allValues = forecast.getAllValuesFor("temp");
 
         const widthPerFC = this.canvas.width / allValues.length;
