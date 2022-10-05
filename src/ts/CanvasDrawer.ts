@@ -52,7 +52,7 @@ export class CanvasDrawer {
         ctx.lineTo(widthPerFC * 0.5, height);
 
         ctx.closePath();
-        ctx.fillStyle = "#f00";
+        ctx.fillStyle = "#ee8";
         ctx.fill();
     }
 }
