@@ -24,6 +24,10 @@ export class SelectHandler {
         );
 
         input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                return;
+            }
+
             window.setTimeout(() => {
                 this.clearOptions();
 
