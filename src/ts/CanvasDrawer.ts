@@ -32,27 +32,31 @@ export class CanvasDrawer {
             return (1 - t) * minY + t * maxY;
         };
 
-        console.log(
-            `Moving to ${widthPerFC * 0.5},${getY(allValues[0]).toFixed(
-                2
-            )}, value ${Metrics.tempTo(allValues[0], "C")}`
-        );
-        ctx.moveTo(widthPerFC * 0.5, getY(allValues[0]));
+        const points: [number, number][] = [];
+
+        points.push([widthPerFC * 0.5, getY(allValues[0])]);
         for (let i = 1; i < allValues.length; i++) {
             const val = allValues[i];
-            console.log(
-                `Line to ${widthPerFC * (i + 0.5)},${getY(val).toFixed(
-                    2
-                )}, value ${Metrics.tempTo(val, "C")}`
-            );
-            ctx.lineTo(widthPerFC * (i + 0.5), getY(val));
+            points.push([widthPerFC * (i + 0.5), getY(val)]);
+        }
+
+        ctx.moveTo(...points[0]);
+        for (let i = 1; i < points.length; i++) {
+            ctx.lineTo(...points[i]);
         }
 
         ctx.lineTo((allValues.length - 0.5) * widthPerFC, height);
         ctx.lineTo(widthPerFC * 0.5, height);
 
         ctx.closePath();
-        ctx.fillStyle = "#ee8";
+        ctx.fillStyle = "#eea";
         ctx.fill();
+
+        ctx.moveTo(...points[0]);
+        for (let i = 1; i < points.length; i++) {
+            ctx.lineTo(...points[i]);
+        }
+        ctx.fillStyle = "#444";
+        ctx.stroke();
     }
 }

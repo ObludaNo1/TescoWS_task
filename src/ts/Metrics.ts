@@ -3,11 +3,11 @@ export class Metrics {
 
     static tempTo(temp: number, unit: "K" | "C" | "F"): string {
         if (unit === "K") {
-            return `${Metrics.toMaxDecimals(temp)}`;
+            return `${Metrics.toMaxDecimals(temp)}K`;
         } else if (unit === "C") {
-            return `${Metrics.toMaxDecimals(temp - 273.15)}`;
+            return `${Metrics.toMaxDecimals(temp - 273.15)}°C`;
         } else {
-            return `${Metrics.toMaxDecimals(1.8 * (temp - 273.15) + 32)}`;
+            return `${Metrics.toMaxDecimals(1.8 * (temp - 273.15) + 32)}°F`;
         }
     }
 

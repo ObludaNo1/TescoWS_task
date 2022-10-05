@@ -1,5 +1,25 @@
+table {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+#form-wrapper {
+    margin-bottom: 1em;
+}
+
 .autocomplete {
     width: 300px;
+    display: inline-block;
+    margin-right: 1em;
+}
+
+#city-selector {
+    width: 300px;
+    font-size: 2em;
+}
+
+#submit-button {
+    font-size: 2em;
 }
 
 #forecast-table {
@@ -9,16 +29,35 @@
     border-collapse: collapse;
 }
 
+#table-preface {
+    display: inline-block;
+}
+
 #table-holder {
     width: 100%;
     overflow-x: auto;
 }
 
 #forecast-table tr td {
-
     width: 5em;
     text-align: center;
     border: 1px solid;
+    padding-top: 0.4em;
+}
 
+.table-row-days {
+    font-size: 1.3em;
+    font-weight: 700;
+}
 
+.table-row-time {
+    font-size: .8em;
+}
+
+.table-row-temp {
+    font-size: 1.1em;
+}
+
+.odd-day-backgound {
+    background-color: #E0E0E0;
 }

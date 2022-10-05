@@ -17,6 +17,13 @@ export class TableFiller {
         const tempRow = document.createElement("tr");
         const recordsPerDay = forecast.getDataPerDay();
 
+        dayRow.classList.add("table-row-days");
+        timeRow.classList.add("table-row-time");
+        tempRow.classList.add("table-row-temp");
+
+        let addOddClass = false;
+        const oddClassName = "odd-day-backgound";
+
         recordsPerDay.forEach((recordsInDay) => {
             const dayCell = document.createElement("td");
             dayCell.colSpan = recordsInDay.length;
@@ -25,6 +32,9 @@ export class TableFiller {
             ).toLocaleString([], {
                 dateStyle: "short",
             });
+            if (addOddClass) {
+                dayCell.classList.add(oddClassName);
+            }
             dayRow.appendChild(dayCell);
             recordsInDay.forEach((hourRecord) => {
                 const timeCell = document.createElement("td");
@@ -33,12 +43,20 @@ export class TableFiller {
                 ).toLocaleString([], {
                     timeStyle: "short",
                 });
+                if (addOddClass) {
+                    timeCell.classList.add(oddClassName);
+                }
                 timeRow.appendChild(timeCell);
 
                 const tempCell = document.createElement("td");
                 tempCell.innerText = Metrics.tempTo(hourRecord.main.temp, "C");
+                if (addOddClass) {
+                    tempCell.classList.add(oddClassName);
+                }
                 tempRow.appendChild(tempCell);
             });
+
+            addOddClass = !addOddClass;
         });
 
         table.appendChild(tempRow);

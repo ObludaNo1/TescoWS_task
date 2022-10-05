@@ -7,23 +7,28 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <h1>Hello World</h1>
+    <div id="form-wrapper">
+        <form id="form" autocomplete="off">
+            <div class="autocomplete" style="width:300px;">
+                <input list="city-selector-options" id="city-selector" type="text" name="city-selector" placeholder="Type city">
+                <datalist id="city-selector-options"></datalist>
+            </div>
+            <input id="submit-button" type="submit" value="Load">
+        </form>
+    </div>
 
-    <form id="form" autocomplete="off">
-        <div class="autocomplete" style="width:300px;">
-            <input list="city-selector-options" id="city-selector" type="text" name="city-selector" placeholder="Type city">
-            <datalist id="city-selector-options"></datalist>
+    <div>
+        <!-- <div id="table-preface">
+            <table>
+                <tr><td>Temperature (°C)</td></tr>
+                <tr><td>Time</td></tr>
+                <tr><td>Date</td></tr>
+            </table>
+        </div> -->
+        <div id="table-holder">
+            <canvas id="canvas"> </canvas>
+            <table id="forecast-table"></table>
         </div>
-        <input type="submit">
-    </form>
-
-    <div id="table-holder">
-        <table id="forecast-table">
-
-        </table>
-        <canvas id="canvas">
-
-        </canvas>
     </div>
 
     <script type="module" src="js/app.js"></script>
