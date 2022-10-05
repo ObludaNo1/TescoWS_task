@@ -1,0 +1,16 @@
+.autocomplete {
+    width: 300px;
+}
+
+#forecast-table {
+    table-layout: fixed;
+    width: 100px;
+}
+
+#forecast-table tr td {
+
+    width: 100px;
+    height: 100px;
+
+
+}
