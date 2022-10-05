@@ -1,9 +1,10 @@
 import { Cities } from "./Cities";
+import { MIN_LETTERS_TO_AUTOCOMPLETE } from "./constants";
 import { CityRecord } from "./types/Cities";
 
 export class SelectHandler {
     private static input: HTMLInputElement;
-    private static optionHolder: HTMLDivElement;
+    private static datalist: HTMLDataListElement;
 
     private constructor() {}
 
@@ -11,48 +12,46 @@ export class SelectHandler {
         const input = document.getElementById(
             "city-selector"
         ) as HTMLInputElement;
-        const optionHolder = document.getElementById(
-            "autocomplete-option-holder"
-        ) as HTMLDivElement;
+        const datalist = document.getElementById(
+            "city-selector-options"
+        ) as HTMLDataListElement;
         SelectHandler.input = input;
-        SelectHandler.optionHolder = optionHolder;
+        SelectHandler.datalist = datalist;
 
         input.addEventListener("input", (e) => {
             SelectHandler.clearOptions();
 
-            const ul = document.createElement("ul");
             const currentInputValue = input.value;
             const values = Cities.findFollowing(currentInputValue);
 
             const currentInputValueLength = currentInputValue.length;
 
-            if (currentInputValueLength === 0) {
+            if (currentInputValueLength < MIN_LETTERS_TO_AUTOCOMPLETE) {
                 return;
             }
 
             values.forEach((v, index) => {
-                const li = document.createElement("li");
-                li.id = "autocomplete-item" + index;
-                li.classList.add("autocomplete-item");
-                li.innerHTML = `<strong>${v.name.substring(
-                    0,
-                    currentInputValueLength
-                )}</strong>${v.name.substring(
-                    currentInputValueLength,
-                    v.name.length
-                )}`;
-                li.addEventListener("click", (ev) => {
+                const opt = document.createElement("option");
+                opt.id = "autocomplete-item" + index;
+                opt.classList.add("autocomplete-item");
+                // opt.innerHTML = `<strong>${v.name.substring(
+                //     0,
+                //     currentInputValueLength
+                // )}</strong>${v.name.substring(
+                //     currentInputValueLength,
+                //     v.name.length
+                // )}`;
+                opt.value = v.name;
+                opt.addEventListener("click", (ev) => {
                     input.innerHTML = v.name;
                     SelectHandler.clearOptions();
                 });
-                ul.appendChild(li);
+                datalist.appendChild(opt);
             });
-
-            optionHolder.appendChild(ul);
         });
     }
 
     static clearOptions(): void {
-        SelectHandler.optionHolder.innerHTML = "";
+        SelectHandler.datalist.innerHTML = "";
     }
 }

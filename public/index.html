@@ -9,12 +9,12 @@
 <body>
     <h1>Hello World</h1>
 
-    <form autocomplete="off">
+    <form id="form" autocomplete="off">
         <div class="autocomplete" style="width:300px;">
-            <input id="city-selector" type="text" name="city-selector" placeholder="Type city">
+            <input list="city-selector-options" id="city-selector" type="text" name="city-selector" placeholder="Type city">
+            <datalist id="city-selector-options"></datalist>
         </div>
         <input type="submit">
-        <div class="autocomplete" id="autocomplete-option-holder"></div>
     </form>
 
     <div id="table-holder">

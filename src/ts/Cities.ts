@@ -12,6 +12,11 @@ export class Cities {
     private constructor() {}
 
     static init(): Promise<void> {
+        if (this.initialized) {
+            return new Promise((resolve, reject) => {
+                reject("already initialized");
+            });
+        }
         return new Promise<void>((resolve, reject) => {
             const http = new HTTP();
             http.get<string>("../data/city.list.json")
