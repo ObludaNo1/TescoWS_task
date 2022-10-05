@@ -1,58 +1,66 @@
 import { Cities } from "./Cities";
 import { MIN_LETTERS_TO_AUTOCOMPLETE } from "./constants";
-import { CityRecord } from "./types/Cities";
 
 export class SelectHandler {
-    private static input: HTMLInputElement;
-    private static datalist: HTMLDataListElement;
+    private input: HTMLInputElement;
+    private datalist: HTMLDataListElement;
 
-    private constructor() {}
+    constructor(input: HTMLInputElement, datalist: HTMLDataListElement) {
+        this.input = input;
+        this.datalist = datalist;
 
-    static init() {
-        const input = document.getElementById(
-            "city-selector"
-        ) as HTMLInputElement;
-        const datalist = document.getElementById(
-            "city-selector-options"
-        ) as HTMLDataListElement;
-        SelectHandler.input = input;
-        SelectHandler.datalist = datalist;
+        const eventFunction = (ev: Event) => {
+            console.log("New event: " + ev.type);
+        };
 
-        input.addEventListener("input", (e) => {
-            SelectHandler.clearOptions();
+        const listeners: (keyof HTMLElementEventMap)[] = [
+            "click",
+            "select",
+            "focus",
+            "submit",
+        ];
+        listeners.forEach((ev) =>
+            this.datalist.addEventListener(ev, eventFunction)
+        );
 
-            const currentInputValue = input.value;
-            const values = Cities.findFollowing(currentInputValue);
+        input.addEventListener("keypress", (e) => {
+            window.setTimeout(() => {
+                this.clearOptions();
 
-            const currentInputValueLength = currentInputValue.length;
+                console.log(`Input changed to "${input.value}"`);
 
-            if (currentInputValueLength < MIN_LETTERS_TO_AUTOCOMPLETE) {
-                return;
-            }
+                const currentInputValue = input.value;
+                const values = Cities.findFollowing(currentInputValue);
 
-            values.forEach((v, index) => {
-                const opt = document.createElement("option");
-                opt.id = "autocomplete-item" + index;
-                opt.classList.add("autocomplete-item");
-                // opt.innerHTML = `<strong>${v.name.substring(
-                //     0,
-                //     currentInputValueLength
-                // )}</strong>${v.name.substring(
-                //     currentInputValueLength,
-                //     v.name.length
-                // )}`;
-                opt.value = v.name;
-                opt.addEventListener("focus", (ev) => {
-                    debugger;
-                    input.innerHTML = v.name;
-                    SelectHandler.clearOptions();
+                const currentInputValueLength = currentInputValue.length;
+
+                if (currentInputValueLength < MIN_LETTERS_TO_AUTOCOMPLETE) {
+                    return;
+                }
+
+                values.forEach((v, index) => {
+                    const opt = document.createElement("option");
+                    opt.id = "autocomplete-item" + index;
+                    opt.classList.add("autocomplete-item");
+                    opt.value = v.name;
+                    listeners.forEach((ev) =>
+                        opt.addEventListener(ev, eventFunction)
+                    );
+                    opt.addEventListener("focus", (ev) => {
+                        input.innerHTML = v.name;
+                        this.clearOptions();
+                    });
+                    datalist.appendChild(opt);
                 });
-                datalist.appendChild(opt);
-            });
+            }, 0);
         });
     }
 
-    static clearOptions(): void {
-        SelectHandler.datalist.innerHTML = "";
+    getValue(): string {
+        return this.input.value;
+    }
+
+    private clearOptions(): void {
+        this.datalist.innerHTML = "";
     }
 }
