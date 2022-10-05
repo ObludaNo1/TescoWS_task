@@ -49,7 +49,8 @@ export class TableFiller {
     getComputedCellWidth(): number {
         const cell = this.table.firstChild?.firstChild;
         if (cell) {
-            return parseFloat(getComputedStyle(cell as Element).width);
+            // add flat 3 as compensation for border
+            return parseFloat(getComputedStyle(cell as Element).width) + 3;
         } else {
             return 0;
         }
