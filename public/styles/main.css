@@ -4,13 +4,21 @@
 
 #forecast-table {
     table-layout: fixed;
-    width: 100px;
+    width: 0px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+#table-holder {
+    width: 100%;
+    overflow-x: auto;
 }
 
 #forecast-table tr td {
 
-    width: 100px;
-    height: 100px;
+    width: 5em;
+    text-align: center;
+    border: 1px solid;
 
 
 }

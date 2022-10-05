@@ -1,3 +1,4 @@
+import { CanvasDrawer } from "./CanvasDrawer";
 import { Cities } from "./Cities";
 import { FORECAST_URL, OPEN_WEATHER_MAP_API_KEY } from "./constants";
 import { Forecast } from "./Forecast";
@@ -5,13 +6,17 @@ import { HTTP } from "./http/HTTP";
 import { SelectHandler } from "./SelectHandler";
 import { TableFiller } from "./TableFiller";
 
-TableFiller.init();
+const canvasDrawer = new CanvasDrawer(
+    document.getElementById("canvas") as HTMLCanvasElement
+);
+
+const tableFiller = new TableFiller(
+    document.getElementById("forecast-table") as HTMLTableElement
+);
 
 Cities.init()
     .then(() => {
         console.log("Cities successfuly initialized");
-
-        Cities.findFollowing("Londo");
 
         SelectHandler.init();
 
@@ -27,7 +32,13 @@ Cities.init()
             if (city) {
                 Forecast.loadFrom(city.coord.lat, city.coord.lon)
                     .then((fc) => {
-                        TableFiller.fill(fc);
+                        tableFiller.fill(fc);
+                        canvasDrawer.resizeCanvas(
+                            fc.getRecordCount() *
+                                tableFiller.getComputedCellWidth(),
+                            60
+                        );
+                        canvasDrawer.draw(fc);
                     })
                     .catch((err) => {
                         throw err;

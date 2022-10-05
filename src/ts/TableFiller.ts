@@ -2,18 +2,14 @@ import { Forecast } from "./Forecast";
 import { Metrics } from "./Metrics";
 
 export class TableFiller {
-    private static table: HTMLTableElement;
+    private table: HTMLTableElement;
 
-    private constructor() {}
-
-    static init(): void {
-        TableFiller.table = document.getElementById(
-            "forecast-table"
-        ) as HTMLTableElement;
+    constructor(table: HTMLTableElement) {
+        this.table = table;
     }
 
-    static fill(forecast: Forecast): void {
-        const table = TableFiller.table;
+    fill(forecast: Forecast): void {
+        const table = this.table;
         table.innerHTML = "";
 
         const dayRow = document.createElement("tr");
@@ -48,5 +44,14 @@ export class TableFiller {
         table.appendChild(tempRow);
         table.appendChild(timeRow);
         table.appendChild(dayRow);
+    }
+
+    getComputedCellWidth(): number {
+        const cell = this.table.firstChild?.firstChild;
+        if (cell) {
+            return parseFloat(getComputedStyle(cell as Element).width);
+        } else {
+            return 0;
+        }
     }
 }

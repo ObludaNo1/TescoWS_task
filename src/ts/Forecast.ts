@@ -1,6 +1,10 @@
 import { FORECAST_URL, OPEN_WEATHER_MAP_API_KEY } from "./constants";
 import { HTTP } from "./http/HTTP";
-import { ForecastRecord, ForecastRequest } from "./types/ForecastRequest";
+import {
+    ForecastRecord,
+    ForecastRequest,
+    WeatherData,
+} from "./types/ForecastRequest";
 
 export class Forecast {
     private data: ForecastRequest;
@@ -28,6 +32,18 @@ export class Forecast {
         });
 
         return result;
+    }
+
+    getAllValuesFor(param: keyof WeatherData): number[] {
+        const result: number[] = [];
+        this.data.list.forEach((v) => {
+            result.push(v.main[param]);
+        });
+        return result;
+    }
+
+    getRecordCount(): number {
+        return this.data.list.length;
     }
 
     private timeToDaysSinceStart(dt: number): number {
