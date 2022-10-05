@@ -10,6 +10,7 @@ export class Forecast {
     private data: ForecastRequest;
 
     private constructor(data: ForecastRequest) {
+        console.log("new Data", this);
         this.data = data;
     }
 
@@ -27,9 +28,11 @@ export class Forecast {
             } else {
                 currentDay = day;
                 result.push(currentArray);
-                currentArray = [];
+                currentArray = [val];
             }
         });
+
+        result.push(currentArray);
 
         return result;
     }
@@ -47,7 +50,8 @@ export class Forecast {
     }
 
     private timeToDaysSinceStart(dt: number): number {
-        return new Date(dt * 1000).setHours(0, 0, 0, 0) / 86400000;
+        // result could non integer because of time zones
+        return Math.floor(new Date(dt * 1000).setHours(0, 0, 0, 0) / 86400000);
     }
 
     static loadFrom(
