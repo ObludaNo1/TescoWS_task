@@ -42,7 +42,8 @@ export class SelectHandler {
                 //     v.name.length
                 // )}`;
                 opt.value = v.name;
-                opt.addEventListener("click", (ev) => {
+                opt.addEventListener("focus", (ev) => {
+                    debugger;
                     input.innerHTML = v.name;
                     SelectHandler.clearOptions();
                 });

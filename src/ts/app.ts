@@ -1,9 +1,11 @@
 import { Cities } from "./Cities";
 import { FORECAST_URL, OPEN_WEATHER_MAP_API_KEY } from "./constants";
+import { Forecast } from "./Forecast";
 import { HTTP } from "./http/HTTP";
 import { SelectHandler } from "./SelectHandler";
+import { TableFiller } from "./TableFiller";
 
-const http = new HTTP();
+TableFiller.init();
 
 Cities.init()
     .then(() => {
@@ -23,17 +25,12 @@ Cities.init()
             const city = Cities.find(value);
 
             if (city) {
-                http.get(FORECAST_URL, {
-                    lat: city.coord.lat.toString(),
-                    lon: city.coord.lon.toString(),
-                    appid: OPEN_WEATHER_MAP_API_KEY,
-                })
-                    .then((data) => {
-                        console.log("Forecast for " + city.name);
-                        console.log(data);
+                Forecast.loadFrom(city.coord.lat, city.coord.lon)
+                    .then((fc) => {
+                        TableFiller.fill(fc);
                     })
                     .catch((err) => {
-                        console.error(err);
+                        throw err;
                     });
             }
         });

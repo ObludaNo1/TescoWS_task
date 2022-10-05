@@ -1,19 +1,31 @@
-export interface CurrentWeather {
-    temp?: number;
+export interface WeatherData {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    sea_level: number;
+    grnd_level: number;
+    humidity: number;
+    temp_kf: number;
 }
 
-export interface HourlyForecast {
-    temp?: number;
+export interface WeatherPhenomena {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
 }
 
-export interface DailyForecast {
-    temp?: number;
+export interface ForecastRecord {
+    dt: number; // unix time (in seconds)
+    main: WeatherData;
+    weather: WeatherPhenomena[];
 }
 
 export interface ForecastRequest {
-    lat: number;
-    lon: number;
-    timezone: string;
-    timezone_offset: number;
-    current?: CurrentWeather;
+    cod: string;
+    message: number;
+    cnt: number;
+    list: ForecastRecord[];
 }
